@@ -1,5 +1,6 @@
 package DAO;
 
+
 import Model.Autor;
 import Model.Livro;
 
@@ -12,11 +13,11 @@ public class LivroDAO extends ConnectionDAO{
     boolean sucesso = false; //Para saber se funcionou
 
     //INSERT
-    public boolean insertLivro(Livro livro) {
+    public boolean insertLivro(Livro livro, Autor autorAux) {
 
         connectToDB();
 
-        String sql = "INSERT INTO Livro (Nome,Autor,Ano_Lanc,genero) values(?,?,?,?)";
+        String sql = "INSERT INTO Livro (Nome,Autor,Ano_Lanc,genero,Autor_idAutor) values(?,?,?,?,?)";
         try {
             pst = con.prepareStatement(sql);
 
@@ -24,6 +25,7 @@ public class LivroDAO extends ConnectionDAO{
             pst.setString(2, livro.getAutor());
             pst.setString(3, String.valueOf(livro.getAnoLancamento()));
             pst.setString(4, livro.getGenero());
+            //pst.setString(4, autorAux.getId());
 
             pst.execute();
             sucesso = true;
@@ -42,7 +44,7 @@ public class LivroDAO extends ConnectionDAO{
     }
 
     //UPDATE
-    public boolean updateLivro(int id, Livro livro) {
+    /*public boolean updateLivro(int id, Livro livro) {
         connectToDB();
         String sql = "UPDATE Livro SET Nome=?,Especializacao=? where idAutor=?";
         try {
@@ -69,7 +71,7 @@ public class LivroDAO extends ConnectionDAO{
     }
 
     //DELETE
-    public boolean deleteAutor(int id) {
+    /*public boolean deleteAutor(int id) {
         connectToDB();
         String sql = "DELETE FROM Autor where idAutor=?";
         try {
@@ -92,7 +94,7 @@ public class LivroDAO extends ConnectionDAO{
     }
 
     //SELECT
-    public ArrayList<Autor> selectAutor() {
+    /*public ArrayList<Autor> selectAutor() {
         ArrayList<Autor> autores = new ArrayList<>();
         connectToDB();
         String sql = "SELECT * FROM Autor";
@@ -126,7 +128,7 @@ public class LivroDAO extends ConnectionDAO{
             }
         }
         return autores;
-    }
+    }*/
 }
 
 

@@ -1,19 +1,19 @@
 package Model;
 
 public class Autor extends Pessoa{
-    private String especializacao;
+    private String genero;
 
     public Autor(String nome,String especializacao) {
         this.setNome(nome);
-        this.especializacao = especializacao;
+        this.genero = genero;
     }
 
     public String getEspecializacao() {
-        return especializacao;
+        return genero;
     }
 
     public void setEspecializacao(String especializacao) {
-        this.especializacao = especializacao;
+        this.genero = especializacao;
     }
 
 }

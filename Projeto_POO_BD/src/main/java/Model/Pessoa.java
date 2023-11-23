@@ -10,7 +10,7 @@ public class Pessoa {
         return nome;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
