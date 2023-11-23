@@ -1,26 +1,30 @@
 package DAO;
 
 import Model.Autor;
+import Model.Livro;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class AutorDAO extends ConnectionDAO{
+public class LivroDAO extends ConnectionDAO{
 
     //DAO - Data Access Object
     boolean sucesso = false; //Para saber se funcionou
 
     //INSERT
-    public boolean insertAutor(Autor autor) {
+    public boolean insertLivro(Livro livro) {
 
         connectToDB();
 
-        String sql = "INSERT INTO Autor (Nome,Especializacao) values(?,?)";
+        String sql = "INSERT INTO Livro (Nome,Autor,Ano_Lanc,genero) values(?,?,?,?)";
         try {
             pst = con.prepareStatement(sql);
 
-            pst.setString(1, autor.getNome());
-            pst.setString(2, autor.getEspecializacao());
+            pst.setString(1, livro.getTitulo());
+            pst.setString(2, livro.getAutor());
+            pst.setString(3, String.valueOf(livro.getAnoLancamento()));
+            pst.setString(4, livro.getGenero());
+
             pst.execute();
             sucesso = true;
         } catch (SQLException exc) {
@@ -38,14 +42,15 @@ public class AutorDAO extends ConnectionDAO{
     }
 
     //UPDATE
-    public boolean updateAutor(int id, Autor autor) {
+    public boolean updateLivro(int id, Livro livro) {
         connectToDB();
-        String sql = "UPDATE Autor SET Nome=?,Especializacao=? where idAutor=?";
+        String sql = "UPDATE Livro SET Nome=?,Especializacao=? where idAutor=?";
         try {
             pst = con.prepareStatement(sql);
-            pst.setString(1, autor.getNome());
-            pst.setString(2, autor.getEspecializacao());
-            pst.setInt(3, id);
+            pst.setString(1, livro.getTitulo());
+            pst.setString(2, livro.getAutor());
+            pst.setString(3, String.valueOf(livro.getAnoLancamento()));
+            pst.setString(4, livro.getGenero());
 
             pst.execute();
             sucesso = true;
