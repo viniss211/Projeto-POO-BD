@@ -5,8 +5,16 @@ public class Livro {
     private String titulo;
     private String autor;
     private int anoLancamento;
-    private String genero;
-    private int numCopias;
+    private String genero;private int numCopias;
+
+    public Livro(int id, String titulo,int anoLancamento,String genero ,String autor) {
+        this.id = id;
+        this.titulo = titulo;
+        this.autor = autor;
+        this.anoLancamento = anoLancamento;
+        this.genero = genero;
+
+    }
 
     public int getId() {
         return id;
@@ -52,7 +60,4 @@ public class Livro {
         this.genero = genero;
     }
 
-    public void setNumCopias(int numCopias) {
-        this.numCopias = numCopias;
-    }
 }

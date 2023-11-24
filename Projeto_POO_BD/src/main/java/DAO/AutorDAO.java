@@ -15,12 +15,13 @@ public class AutorDAO extends ConnectionDAO{
 
         connectToDB();
 
-        String sql = "INSERT INTO Autor (Nome,Especializacao) values(?,?)";
+        String sql = "INSERT INTO Autor (Nome,Especializacao,Literatura) values(?,?,?)";
         try {
             pst = con.prepareStatement(sql);
 
             pst.setString(1, autor.getNome());
             pst.setString(2, autor.getEspecializacao());
+            pst.setString(3, autor.getTipoLiteratura());
             pst.execute();
             sucesso = true;
         } catch (SQLException exc) {
@@ -100,10 +101,11 @@ public class AutorDAO extends ConnectionDAO{
 
             while (rs.next()) {
 
-                Autor autorAux = new Autor(rs.getString("Nome"),rs.getString("Especializacao"));
+                Autor autorAux = new Autor(rs.getString("Nome"),rs.getString("Especializacao"),rs.getString("Literatura"));
 
                 System.out.println("Nome = " + autorAux.getNome());
                 System.out.println("Especialização = " + autorAux.getEspecializacao());
+                System.out.println("Tipo de Literatura = " + autorAux.getTipoLiteratura());
                 System.out.println("--------------------------------");
 
                 autores.add(autorAux);

@@ -1,7 +1,6 @@
 package DAO;
 
 
-import Model.Autor;
 import Model.Livro;
 
 import java.sql.SQLException;
@@ -13,19 +12,19 @@ public class LivroDAO extends ConnectionDAO{
     boolean sucesso = false; //Para saber se funcionou
 
     //INSERT
-    public boolean insertLivro(Livro livro, Autor autorAux) {
+    public boolean insertLivro(Livro livro) {
 
         connectToDB();
 
-        String sql = "INSERT INTO Livro (Nome,Autor,Ano_Lanc,genero,Autor_idAutor) values(?,?,?,?,?)";
+        String sql = "INSERT INTO Livro (Nome,Ano_Lanc,genero,Autor_nomeAutor) values(?,?,?,?)";
         try {
             pst = con.prepareStatement(sql);
 
             pst.setString(1, livro.getTitulo());
-            pst.setString(2, livro.getAutor());
-            pst.setString(3, String.valueOf(livro.getAnoLancamento()));
-            pst.setString(4, livro.getGenero());
-            //pst.setString(4, autorAux.getId());
+            pst.setString(2, String.valueOf(livro.getAnoLancamento()));
+            pst.setString(3, livro.getGenero());
+            pst.setString(4, livro.getAutor());
+
 
             pst.execute();
             sucesso = true;
@@ -91,29 +90,31 @@ public class LivroDAO extends ConnectionDAO{
             }
         }
         return sucesso;
-    }
+    }*/
 
     //SELECT
-    /*public ArrayList<Autor> selectAutor() {
-        ArrayList<Autor> autores = new ArrayList<>();
+    public ArrayList<Livro> selectLivro() {
+        ArrayList<Livro> livros = new ArrayList<>();
         connectToDB();
-        String sql = "SELECT * FROM Autor";
+        String sql = "SELECT * FROM Livro";
 
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql);
 
-            System.out.println("Lista de Autores: ");
+            System.out.println("Lista de Livros da biblioteca: ");
 
             while (rs.next()) {
 
-                Autor autorAux = new Autor(rs.getString("Nome"),rs.getString("Especializacao"));
-
-                System.out.println("Nome = " + autorAux.getNome());
-                System.out.println("Especialização = " + autorAux.getEspecializacao());
+                Livro livroAux = new Livro(rs.getInt("idlivro"),rs.getString("Nome"),rs.getInt("Ano_Lanc"),rs.getString("genero"),rs.getString("Autor_nomeAutor"));
+                System.out.println("ID = " + livroAux.getId());
+                System.out.println("Titulo = " + livroAux.getTitulo());
+                System.out.println("Ano de publicação = " + livroAux.getAnoLancamento());
+                System.out.println("Gênero Literário = " + livroAux.getGenero());
+                System.out.println("Autor = " + livroAux.getAutor());
                 System.out.println("--------------------------------");
 
-                autores.add(autorAux);
+                livros.add(livroAux);
             }
             sucesso = true;
         } catch (SQLException e) {
@@ -127,8 +128,8 @@ public class LivroDAO extends ConnectionDAO{
                 System.out.println("Erro: " + e.getMessage());
             }
         }
-        return autores;
-    }*/
+        return livros;
+    }
 }
 
 
