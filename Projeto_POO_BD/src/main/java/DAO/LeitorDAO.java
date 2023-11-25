@@ -1,31 +1,28 @@
 package DAO;
 
-
-import Model.Livro;
+import Model.Autor;
+import Model.Leitor;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class LivroDAO extends ConnectionDAO{
+public class LeitorDAO extends ConnectionDAO{
 
     //DAO - Data Access Object
     boolean sucesso = false; //Para saber se funcionou
 
     //INSERT
-    public boolean insertLivro(Livro livro) {
+    public boolean insertLeitor(Leitor leitor) {
 
         connectToDB();
 
-        String sql = "INSERT INTO Livro (Nome,Ano_Lanc,genero,Autor_nomeAutor) values(?,?,?,?)";
+        String sql = "INSERT INTO Leitor (Nome,cpf,telefone) values(?,?,?)";
         try {
             pst = con.prepareStatement(sql);
 
-            pst.setString(1, livro.getTitulo());
-            pst.setString(2, String.valueOf(livro.getAnoLancamento()));
-            pst.setString(3, livro.getGenero());
-            pst.setString(4, livro.getAutor());
-
-
+            pst.setString(1, leitor.getNome());
+            pst.setString(2, leitor.getCpf());
+            pst.setString(3, leitor.getTelefone());
             pst.execute();
             sucesso = true;
         } catch (SQLException exc) {
@@ -43,15 +40,15 @@ public class LivroDAO extends ConnectionDAO{
     }
 
     //UPDATE
-    /*public boolean updateLivro(int id, Livro livro) {
+    public boolean updateLeitor(int id, Leitor leitor) {
         connectToDB();
-        String sql = "UPDATE Livro SET Nome=?,Especializacao=? where idAutor=?";
+        String sql = "UPDATE Leitor SET Nome=?,cpf=?,telefone=? where idLeitor=?";
         try {
             pst = con.prepareStatement(sql);
-            pst.setString(1, livro.getTitulo());
-            pst.setString(2, livro.getAutor());
-            pst.setString(3, String.valueOf(livro.getAnoLancamento()));
-            pst.setString(4, livro.getGenero());
+            pst.setString(1, leitor.getNome());
+            pst.setString(2, leitor.getCpf());
+            pst.setString(3, leitor.getTelefone());
+            pst.setInt(4, id);
 
             pst.execute();
             sucesso = true;
@@ -67,12 +64,12 @@ public class LivroDAO extends ConnectionDAO{
             }
         }
         return sucesso;
-    }*/
+    }
 
     //DELETE
-    public boolean deleteLivro(int id) {
+    public boolean deleteAutor(int id) {
         connectToDB();
-        String sql = "DELETE FROM Livro where idLivro=?";
+        String sql = "DELETE FROM Autor where idAutor=?";
         try {
             pst = con.prepareStatement(sql);
             pst.setInt(1, id);
@@ -93,28 +90,27 @@ public class LivroDAO extends ConnectionDAO{
     }
 
     //SELECT
-    public ArrayList<Livro> selectLivro() {
-        ArrayList<Livro> livros = new ArrayList<>();
+    public ArrayList<Autor> selectAutor() {
+        ArrayList<Autor> autores = new ArrayList<>();
         connectToDB();
-        String sql = "SELECT * FROM Livro";
+        String sql = "SELECT * FROM Autor";
 
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql);
 
-            System.out.println("Lista de Livros da biblioteca: ");
+            System.out.println("Lista de Autores: ");
 
             while (rs.next()) {
 
-                Livro livroAux = new Livro(rs.getInt("idlivro"),rs.getString("Nome"),rs.getInt("Ano_Lanc"),rs.getString("genero"),rs.getString("Autor_nomeAutor"));
-                System.out.println("ID = " + livroAux.getId());
-                System.out.println("Titulo = " + livroAux.getTitulo());
-                System.out.println("Ano de publicação = " + livroAux.getAnoLancamento());
-                System.out.println("Gênero Literário = " + livroAux.getGenero());
-                System.out.println("Autor = " + livroAux.getAutor());
+                Autor autorAux = new Autor(rs.getString("Nome"),rs.getString("Especializacao"),rs.getString("Literatura"));
+
+                System.out.println("Nome = " + autorAux.getNome());
+                System.out.println("Especialização = " + autorAux.getEspecializacao());
+                System.out.println("Tipo de Literatura = " + autorAux.getTipoLiteratura());
                 System.out.println("--------------------------------");
 
-                livros.add(livroAux);
+                autores.add(autorAux);
             }
             sucesso = true;
         } catch (SQLException e) {
@@ -128,8 +124,10 @@ public class LivroDAO extends ConnectionDAO{
                 System.out.println("Erro: " + e.getMessage());
             }
         }
-        return livros;
+        return autores;
     }
+
+
 }
 
 
