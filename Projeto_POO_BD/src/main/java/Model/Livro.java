@@ -36,13 +36,8 @@ public class Livro {
         return genero;
     }
 
-    public int getNumCopias() {
-        return numCopias;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;

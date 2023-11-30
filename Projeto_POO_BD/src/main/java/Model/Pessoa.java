@@ -15,9 +15,7 @@ public class Pessoa {
         return nome;
     }
 
-    public int getId() {
-        return id;
-    }
+
 
     public void setNome(String nome) {
         this.nome = nome;

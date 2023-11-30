@@ -18,11 +18,5 @@ public class Leitor extends Pessoa{
         return telefone;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
 }
